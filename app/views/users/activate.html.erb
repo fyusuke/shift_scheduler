@@ -1,0 +1,9 @@
+%h1 Activate
+
+= simple_form_for @user, url: confirm_user_url(@user) do |f|
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :password
+  = f.input :password_confirmation
+  = f.input :token, input_html: { value: @token }, as: :hidden
+  = f.submit 
