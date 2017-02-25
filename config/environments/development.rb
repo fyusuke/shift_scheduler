@@ -27,7 +27,10 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :test
+  host = 'shift-scheduler-fyusuke.c9users.io'     # クラウド IDE
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
 
   config.action_mailer.perform_caching = false
 
@@ -51,13 +54,6 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-  
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address => 'smtp.mail.yahoo.co.jp',
-    :port => 587,
-    :authentication => :login,
-    :user_name => 'shiftscheduler@yahoo.co.jp',
-    :password => 'qwer123'
-  }
+  #config.web_console.whitelisted_ips = '106.154.117.3'   
+  config.web_console.whiny_requests = false
 end
