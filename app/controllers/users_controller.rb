@@ -1,17 +1,29 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :require_login, :only => [:index, :new, :create, :activate]
-  
-  def activate
-    
-    if (@user = User.load_from_activation_token(params[:id]))
-      @user.activate!
-      redirect_to(login_path, :notice => 'User was successfully activated.')
-    else
-      not_authenticated
-    end
+skip_before_filter :require_login, :only => [:index, :new, :create, :activate, :confirm]
+
+def activate
+  if (@user = User.load_from_activation_token(params[:id]))
+    @token = params[:id]
+  else
+    not_authenticated
   end
-  
+end
+
+def confirm
+  @token = params[:user][:token]
+  if @user = User.load_from_activation_token(@token)
+    if @user.update_attributes(params[:user])
+      @user.activate!
+      redirect_to login_url, :notice => 'Your account is now activated.'
+    else
+      render :activate
+    end
+  else
+    not_authenticated
+  end
+end
+
   # GET /users
   # GET /users.json
   def index

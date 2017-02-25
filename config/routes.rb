@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   root :to => 'users#index'
+  resources :password_resets
   resources :user_sessions
   resources :users do
     member do
-      get :activate
+     get :activate
+     put :confirm
     end
   end
    
