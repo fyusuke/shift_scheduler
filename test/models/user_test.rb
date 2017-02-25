@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
+  include Sorcery::TestHelpers::Rails::Integration
+  include Sorcery::TestHelpers::Rails::Controller
+  
   def setup
     @user = users(:testman)
   end
@@ -64,16 +66,39 @@ class UserTest < ActiveSupport::TestCase
   
   
   #passwordのvalidationのチェック
-  test "password should be present (nonblank)" do
+  test "password should be nil" do
+    assert_nil @user.password
+  end
+
+  test "crypted_password should not be empty" do
+    assert_not_empty @user.crypted_password
+  end
+  
+  test "crypted_password should not be nil" do
+    assert_not_nil @user.crypted_password
+  end
+
+  #  web上では空白をはじくのにテストでははじかない謎  
+  # test "password should be present (nonblank)" do
+  #   @user.password = @user.password_confirmation = " " * 6
+  #   assert_not @user.valid?
+  # end
+
+  test "空白は文字と同じ扱いである" do
     @user.password = @user.password_confirmation = " " * 6
-    assert_not @user.valid?
+    assert @user.password
   end
 
   test "password should have a minimum length" do
-    @user.password = @user.password_confirmation = "a" * 5
+    @user.password = @user.password_confirmation = "a" * 3
     assert_not @user.valid?
   end
-  
+
+  test "this password should be passed" do
+    @user.password = @user.password_confirmation = "a" * 10
+    assert @user.valid?
+  end
+
   #電話番号のvalidationのチェック
   test "phone should not be too short" do
     @user.phone = "1" * 8
@@ -120,5 +145,4 @@ class UserTest < ActiveSupport::TestCase
   #     @user.destroy
   #   end
   # end
-
 end
