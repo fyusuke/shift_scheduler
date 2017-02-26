@@ -13,7 +13,7 @@ end
 def confirm
   @token = params[:user][:token]
   if @user = User.load_from_activation_token(@token)
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       @user.activate!
       redirect_to login_url, :notice => 'Your account is now activated.'
     else

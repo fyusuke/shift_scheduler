@@ -1,0 +1,38 @@
+<h1>Activate</h1>
+
+<%= form_for @user, :url => {:action => 'confirm'}, method: 'put' do |f| %>
+  <div class="field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.text_field :password %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.text_field :password_confirmation %>
+  </div>
+
+    <%= f.hidden_field :token, :value => @token %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  
+<% end %>
+
+<!--= simple_form_for @user, url: confirm_user_url(@user) do |f|-->
+<!--  = f.input :first_name-->
+<!--  = f.input :last_name-->
+<!--  = f.input :password-->
+<!--  = f.input :password_confirmation-->
+<!--  = f.input :token, input_html: { value: @token }, as: :hidden-->
+<!--  = f.submit -->
