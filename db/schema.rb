@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226144637) do
+ActiveRecord::Schema.define(version: 20170226152425) do
+
+  create_table "indivisual_checks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "work_id"
+  end
+
+  create_table "overall_checks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "work_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                           null: false
