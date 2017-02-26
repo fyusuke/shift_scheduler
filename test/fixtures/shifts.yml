@@ -1,0 +1,7 @@
+one:
+  worker_id: 1
+  ymd: 20170213
+  time: 1000153060
+  status: 0
+  default?: 0
+  work_or_rest?: 0

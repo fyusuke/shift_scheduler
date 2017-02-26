@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226152425) do
+ActiveRecord::Schema.define(version: 20170226160140) do
 
   create_table "indivisual_checks", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 20170226152425) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "work_id"
+  end
+
+  create_table "shifts", force: :cascade do |t|
+    t.string   "ymd"
+    t.string   "time"
+    t.integer  "status"
+    t.integer  "default?",      default: 0
+    t.integer  "work_or_rest?"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "worker_id"
+    t.index ["worker_id", "ymd", "time"], name: "index_shifts_on_worker_id_and_ymd_and_time", unique: true
   end
 
   create_table "users", force: :cascade do |t|
