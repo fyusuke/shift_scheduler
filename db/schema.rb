@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226163731) do
+ActiveRecord::Schema.define(version: 20170226170406) do
 
   create_table "indivisual_checks", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(version: 20170226163731) do
   end
 
   create_table "lines", force: :cascade do |t|
-    t.integer  "line_id"
     t.integer  "conv_state"
     t.string   "answers"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["line_id"], name: "index_lines_on_line_id", unique: true
+    t.string   "line_token"
+    t.index ["line_token"], name: "index_lines_on_line_token", unique: true
   end
 
   create_table "overall_checks", force: :cascade do |t|
