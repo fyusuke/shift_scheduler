@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170225140655) do
+ActiveRecord::Schema.define(version: 20170226144637) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                           null: false
@@ -33,10 +33,33 @@ ActiveRecord::Schema.define(version: 20170225140655) do
     t.string   "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.integer  "line_id"
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
+  end
+
+  create_table "workers", force: :cascade do |t|
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "admin",        default: false
+    t.string   "first_day"
+    t.string   "skill_values"
+    t.integer  "user_id"
+    t.integer  "work_id"
+    t.index ["user_id", "work_id"], name: "index_workers_on_user_id_and_work_id", unique: true
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "name"
+    t.string   "phone"
+    t.string   "address"
+    t.string   "skill_items"
+    t.string   "training_names"
+    t.string   "qual_names"
   end
 
 end

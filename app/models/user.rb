@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
   
-  has_many :user_work_relationships, dependent:   :destroy
-  has_many :works, through: :user_work_relationships
+  has_many :works, through: :workers
   has_many :workers, dependent: :destroy
   belongs_to :lines, dependent:   :destroy
 
