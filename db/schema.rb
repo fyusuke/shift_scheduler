@@ -10,18 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226160140) do
+ActiveRecord::Schema.define(version: 20170226163731) do
 
   create_table "indivisual_checks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "work_id"
+    t.index ["work_id"], name: "index_indivisual_checks_on_work_id", unique: true
+  end
+
+  create_table "lines", force: :cascade do |t|
+    t.integer  "line_id"
+    t.integer  "conv_state"
+    t.string   "answers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_id"], name: "index_lines_on_line_id", unique: true
   end
 
   create_table "overall_checks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "work_id"
+    t.index ["work_id"], name: "index_overall_checks_on_work_id", unique: true
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -60,6 +71,8 @@ ActiveRecord::Schema.define(version: 20170226160140) do
     t.integer  "line_id"
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["line_id"], name: "index_users_on_line_id", unique: true
+    t.index ["phone"], name: "index_users_on_phone", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
@@ -84,6 +97,8 @@ ActiveRecord::Schema.define(version: 20170226160140) do
     t.string   "skill_items"
     t.string   "training_names"
     t.string   "qual_names"
+    t.index ["name"], name: "index_works_on_name", unique: true
+    t.index ["phone"], name: "index_works_on_phone", unique: true
   end
 
 end
