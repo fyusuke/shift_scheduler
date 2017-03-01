@@ -1,7 +1,8 @@
 one:
-  worker_id: 1
-  ymd: 20170213
-  time: 1000153060
+  worker_id: 20
+  start_datetime: 2012-03-22 00:00:00
+  end_datetime: 2012-03-22 10:00:00
+  rest_sec: 2400
   status: 0
   default?: 0
   work_or_rest?: 0

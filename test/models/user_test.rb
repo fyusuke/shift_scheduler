@@ -128,21 +128,26 @@ class UserTest < ActiveSupport::TestCase
   end
 
   
-  # #UserWorkRelationshipモデルとの連携
-  # test "associated user_work_relationships should be destroyed" do
-  #   @user.save
-  #   @user.user_work_relationships.create!(work_id: 2)
-  #   assert_difference 'UserWorkRelationship.count', -1 do
-  #     @user.destroy
-  #   end
-  # end
+  #UserとWorkerの連携
+  test "relationships between user and worker should be destroyed" do
+    @user.save
+    assert_difference 'Worker.count', 1 do
+      @user.workers.create!(work_id: 2)
+    end
+    assert_difference 'Worker.count', -1 do
+      @user.destroy
+    end
+  end
   
-  # #Workerモデルとの連携
-  # test "associated Workers should be destroyed" do
-  #   @user.save
-  #   @user.workers.create!(work_id: 1)
-  #   assert_difference 'Worker.count', -1 do
-  #     @user.destroy
-  #   end
-  # end
+  #UserとShiftの連携
+  test "relationships between user and shift should be destroyed" do
+    @user.save
+      worker = @user.workers.create!(work_id: 1)
+    assert_difference 'Shift.count', 1 do
+      Shift.create!(worker_id: worker.id, start_datetime:"2012-09-22 00:00:00", end_datetime:"2012-09-22 10:00:00", rest_sec: 2400)
+    end
+    assert_difference 'Shift.count', -1 do
+      @user.destroy
+    end
+  end
 end

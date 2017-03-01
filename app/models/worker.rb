@@ -1,7 +1,7 @@
 class Worker < ApplicationRecord
   belongs_to :users
   belongs_to :works
-  has_many :shifts, dependent:   :destroy
+  has_many :shifts, :dependent => :destroy
 
   validates :user_id, presence: true
   validates :work_id, presence: true

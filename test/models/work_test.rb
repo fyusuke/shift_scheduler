@@ -52,22 +52,46 @@ class WorkTest < ActiveSupport::TestCase
   end
 
   
-  # #UserWorkRelationshipモデルとの連携
-  # test "associated user_work_relationships should be destroyed" do
-  #   @user.save
-  #   @user.user_work_relationships.create!(work_id: 2)
-  #   assert_difference 'UserWorkRelationship.count', -1 do
-  #     @user.destroy
-  #   end
-  # end
+  #WorkとWorkerの連携
+  test "relationships between work and worker should be destroyed" do
+    @work.save
+    assert_difference 'Worker.count', 1 do
+      @work.workers.create!(user_id: 2)
+    end
+    assert_difference 'Worker.count', -1 do
+      @work.destroy
+    end
+  end
   
-  # #Workerモデルとの連携
-  # test "associated Workers should be destroyed" do
-  #   @user.save
-  #   @user.workers.create!(work_id: 1)
-  #   assert_difference 'Worker.count', -1 do
-  #     @user.destroy
-  #   end
-  # end
+  #WorkとIndivisualCheckの連携
+  test "relationships between work and indivisual check should be destroyed" do
+    @work.save
+    @work.create_indivisual_check
+    assert_difference 'IndivisualCheck.count', -1 do
+      @work.destroy
+    end
+  end
+  
+  #WorkとOverallCheckの連携
+  test "relationships between work and overall check should be destroyed" do
+    @work.save
+    @work.create_overall_check
+    assert_difference 'OverallCheck.count', -1 do
+      @work.destroy
+    end
+  end
+  
+  #WorkとShiftの連携
+  test "relationships between work and shift should be destroyed" do
+    @work.save
+      worker = @work.workers.create!(user_id: 1)
+    assert_difference 'Shift.count', 1 do
+      Shift.create!(worker_id: worker.id, start_datetime:"2012-09-22 00:00:00", end_datetime:"2012-09-22 10:00:00", rest_sec: 2400)
+    end
+    assert_difference 'Shift.count', -1 do
+      @work.destroy
+    end
+  end
+  
 end
 

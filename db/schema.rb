@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226170406) do
+ActiveRecord::Schema.define(version: 20170301111647) do
 
   create_table "indivisual_checks", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -36,15 +36,16 @@ ActiveRecord::Schema.define(version: 20170226170406) do
   end
 
   create_table "shifts", force: :cascade do |t|
-    t.string   "ymd"
-    t.string   "time"
     t.integer  "status"
-    t.integer  "default?",      default: 0
+    t.integer  "default?",       default: 0
     t.integer  "work_or_rest?"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "worker_id"
-    t.index ["worker_id", "ymd", "time"], name: "index_shifts_on_worker_id_and_ymd_and_time", unique: true
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.integer  "rest_sec"
+    t.index ["worker_id"], name: "index_shifts_on_worker_id_and_ymd_and_time", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -78,13 +79,13 @@ ActiveRecord::Schema.define(version: 20170226170406) do
   end
 
   create_table "workers", force: :cascade do |t|
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.boolean  "admin",        default: false
-    t.string   "first_day"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "admin",          default: false
     t.string   "skill_values"
     t.integer  "user_id"
     t.integer  "work_id"
+    t.datetime "first_datetime"
     t.index ["user_id", "work_id"], name: "index_workers_on_user_id_and_work_id", unique: true
   end
 
